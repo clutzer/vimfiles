@@ -71,7 +71,7 @@ map <F4> :e ++enc=cp1252<CR>
 " Format XML with xmllint:
 map @@x V!xmllint --format -<CR>
 " Format JSON with python json.tools:
-map @@j V!python -m json.tool<CR>
+map @@j V!python3 -m json.tool<CR>
 map @@js :set filetype=javascript<CR>
 map @@h :set filetype=html<CR>
 map @@p :set filetype=php<CR>
@@ -99,6 +99,11 @@ endif
 if has("gui_running")
   " :help guioptions
   set guioptions=agimrLtTb
+endif
+
+if has("gui_macvim")
+  " 2024/01/08 - let MacVim use the system font
+  set guifont=-monospace-:h12
 endif
   
 " Only do this part when compiled with support for autocommands.
@@ -135,6 +140,11 @@ if has("autocmd")
 
   "autocmd BufEnter * highlight OverLength ctermbg=yellow guibg=#505050 guifg=white
   "autocmd BufEnter * match OverLength /\%81v.*/
+
+  autocmd BufRead *.md set tw=80 ts=4 sw=4 et wrap
+
+  " Linode VBIN enhancement.
+  au BufRead,BufNewFile host.lib set filetype=perl
 
   augroup END
 
